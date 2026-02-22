@@ -22,8 +22,8 @@ The application state will be stored in a single JSON object in `localStorage`.
 ```json
 {
   "userSettings": {
-    "currentPhase": "1", // 1, 2, or 3 (See Sec 6 for validation)
-    "tjtMaxReps": 0, // Integer, max reps in 2 minutes (See Sec 6 for validation)
+    "currentPhase": "1", // 1, 2, or 3
+    "tjtMaxReps": 0, // Integer, max reps in 2 minutes
     "theme": "light" // Optional
   },
   "workouts": [
@@ -33,9 +33,9 @@ The application state will be stored in a single JSON object in `localStorage`.
       "type": "Leg Blaster" | "TJT" | "Max Strength" | "Recovery",
       "subtype": "Mini" | "Full" | null,
       "metrics": {
-        "setsCompleted": 5, // (See Sec 6 for validation)
-        "rounds": 10, // (See Sec 6 for validation)
-        "notes": "Felt good" // (See Sec 6 for validation)
+        "setsCompleted": 5,
+        "rounds": 10,
+        "notes": "Felt good"
       }
     }
   ]
@@ -48,9 +48,9 @@ The application state will be stored in a single JSON object in `localStorage`.
 *   **Initialize Project:** Setup React + Vite + Tailwind.
 *   **Storage Manager:** Implement a service to handle reading/writing to `localStorage`.
 *   **Settings Page:**
-    *   Global Phase Selector (Phase 1, 2, 3) - **Input Validation Required** (See Sec 6).
-    *   TJT "2-minute max reps" Input - **Input Validation Required** (See Sec 6).
-    *   "Export to CSV" Button - **CSV Injection Protection Required** (See Sec 6).
+    *   Global Phase Selector (Phase 1, 2, 3).
+    *   TJT "2-minute max reps" Input.
+    *   "Export to CSV" Button.
 
 ### Phase 2: Dynamic Dashboard
 The Dashboard must adapt based on the `currentPhase` setting:
@@ -75,7 +75,7 @@ The Dashboard must adapt based on the `currentPhase` setting:
 
 #### TJT (The Jumps Training) Calculator
 *   **Logic:**
-    *   Retrieve "2-minute max reps" from Settings (Validate as per Sec 6).
+    *   Retrieve "2-minute max reps" from Settings.
     *   Calculate Daily EMOM Target = `Round(0.25 * max_reps)`.
 *   **UI:**
     *   Display target reps per minute.
@@ -90,24 +90,3 @@ The Dashboard must adapt based on the `currentPhase` setting:
     *   Large Cards for Workout Types.
     *   Big "Start" / "Stop" buttons for timers.
     *   Simple Input fields for numbers.
-
-## 6. Security & Data Integrity
-
-### Input Validation Rules
-To ensure data integrity and prevent security vulnerabilities, all inputs must adhere to the following rules:
-
-*   **Global Phase Selector:**
-    *   Allowed values: "1", "2", "3".
-    *   Type: String.
-*   **TJT "2-minute max reps":**
-    *   Constraint: Non-negative integer.
-    *   Maximum Value: 500.
-*   **Workout Metrics:**
-    *   `setsCompleted`: Non-negative integer (0-100).
-    *   `rounds`: Non-negative integer (0-100).
-*   **Workout Notes:**
-    *   Maximum Length: 500 characters.
-    *   **XSS Protection:** All notes must be HTML-escaped before being rendered in the DOM to prevent Cross-Site Scripting.
-
-### Data Export Security
-*   **CSV Injection Prevention:** When exporting data to CSV, all string fields must be sanitized. If a field begins with any of the following characters: `=`, `+`, `-`, `@`, it must be prepended with a single quote (`'`) to prevent execution of malicious formulas in spreadsheet software.
