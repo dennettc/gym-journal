@@ -9,7 +9,7 @@ A "Mission-Direct" Alpine Ski Training Journal web app designed exclusively for 
 *   **Data Persistence:** `localStorage` only.
     *   **Key:** `ski_journal_data`
     *   **Privacy:** 100% on-device. No backend, no authentication.
-*   **Data Portability:** Feature to "Export to CSV".
+*   **Data Portability:** Feature to "Export to CSV". Ensure all user-generated content is sanitized (e.g., by prepending `'` to fields starting with `=`, `+`, `-`, or `@`) to prevent CSV Injection attacks.
 *   **UI/UX:** Mobile-First. Large, tap-friendly buttons for gym use.
 *   **Tech Stack:**
     *   React (Vite)
