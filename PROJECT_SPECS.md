@@ -6,10 +6,15 @@ A "Mission-Direct" Alpine Ski Training Journal web app designed exclusively for 
 **Scope:** Dryland Training ONLY. No "On-Snow" or "SkillsQuest" features.
 
 ## 2. Core Constraints & Architecture
-*   **Data Persistence:** `localStorage` only.
-    *   **Key:** `ski_journal_data`
-    *   **Privacy:** 100% on-device. No backend, no authentication.
-*   **Data Portability:** Feature to "Export to CSV".
+*   **Data Persistence:** Encrypted `localStorage` only.
+    *   **Key:** `ski_journal_data` (Stored as encrypted string).
+    *   **Privacy:** 100% on-device. No backend.
+    *   **Authentication:** Local-only via user PIN/Password to decrypt data.
+*   **Security Protocols:**
+    *   **Encryption:** Data at rest must be encrypted (e.g., AES-GCM) using a key derived from user input.
+    *   **Input Sanitization:** All user inputs (especially workout notes) must be HTML-escaping to prevent XSS.
+    *   **CSV Injection Prevention:** Sanitization of all fields before export (e.g., prepending `'` to special characters).
+*   **Data Portability:** Feature to "Export to CSV" (Sanitized).
 *   **UI/UX:** Mobile-First. Large, tap-friendly buttons for gym use.
 *   **Tech Stack:**
     *   React (Vite)
@@ -17,7 +22,7 @@ A "Mission-Direct" Alpine Ski Training Journal web app designed exclusively for 
     *   Lucide-React icons
 
 ## 3. Data Structure
-The application state will be stored in a single JSON object in `localStorage`.
+The application state will be stored as an encrypted string in `localStorage`. Once decrypted, the JSON structure is as follows:
 
 ```json
 {
@@ -46,7 +51,7 @@ The application state will be stored in a single JSON object in `localStorage`.
 
 ### Phase 1: Foundation & Settings
 *   **Initialize Project:** Setup React + Vite + Tailwind.
-*   **Storage Manager:** Implement a service to handle reading/writing to `localStorage`.
+*   **Storage Manager:** Implement a service to handle reading/writing to `localStorage` with Encryption/Decryption.
 *   **Settings Page:**
     *   Global Phase Selector (Phase 1, 2, 3) - **Input Validation Required** (See Sec 6).
     *   TJT "2-minute max reps" Input - **Input Validation Required** (See Sec 6).
