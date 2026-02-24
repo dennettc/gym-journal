@@ -8,7 +8,7 @@ A "Mission-Direct" Alpine Ski Training Journal web app designed exclusively for 
 ## 2. Core Constraints & Architecture
 *   **Data Persistence:** `localStorage` only.
     *   **Key:** `ski_journal_data`
-    *   **Privacy:** 100% on-device. No backend, no authentication.
+    *   **Privacy:** 100% on-device. No backend. Optional PIN authentication for local access control.
 *   **Data Portability:** Feature to "Export to CSV".
 *   **UI/UX:** Mobile-First. Large, tap-friendly buttons for gym use.
 *   **Tech Stack:**
@@ -24,7 +24,8 @@ The application state will be stored in a single JSON object in `localStorage`.
   "userSettings": {
     "currentPhase": "1", // 1, 2, or 3
     "tjtMaxReps": 0, // Integer, max reps in 2 minutes
-    "theme": "light" // Optional
+    "theme": "light", // Optional
+    "pinHash": null // Hashed PIN string (SHA-256) or null if disabled
   },
   "workouts": [
     {
@@ -51,6 +52,7 @@ The application state will be stored in a single JSON object in `localStorage`.
     *   Global Phase Selector (Phase 1, 2, 3).
     *   TJT "2-minute max reps" Input.
     *   "Export to CSV" Button.
+    *   **Security:** Set/Change PIN.
 
 ### Phase 2: Dynamic Dashboard
 The Dashboard must adapt based on the `currentPhase` setting:
